@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "935550430889",
+    "project_id": "erasmusapp-e48f5",
+    "storage_bucket": "erasmusapp-e48f5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935550430889:android:485a72a008b00c346403b8",
+        "android_client_info": {
+          "package_name": "com.example.erasmus_app_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-QTrh-gRQAofJDj46yCxIRkbcIWANXLg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
