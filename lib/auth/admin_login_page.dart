@@ -24,7 +24,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
 
   Future<void> login() async {
     if (!_formKey.currentState!.validate()) return;
-
+    if (!mounted) return;
     setState(() {
       isLoading = true;
       errorMessage = '';
@@ -60,22 +60,26 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
             MaterialPageRoute(builder: (_) => const ChooseLocationPage()),
           );
         } else {
+          if (!mounted) return;
           setState(() {
             errorMessage = 'No access. Please contact administrator.';
           });
           await FirebaseAuth.instance.signOut();
         }
       } else {
+        if (!mounted) return;
         setState(() {
           errorMessage = 'User record not found.';
         });
         await FirebaseAuth.instance.signOut();
       }
     } on FirebaseAuthException catch (e) {
+      if (!mounted) return;
       setState(() {
         errorMessage = e.message ?? 'Authentication failed.';
       });
     } finally {
+      if (!mounted) return;
       setState(() {
         isLoading = false;
       });

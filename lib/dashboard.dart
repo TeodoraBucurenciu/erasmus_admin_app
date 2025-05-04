@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'auth/admin_login_page.dart';
+import 'flagged_reviews_page.dart';
 import 'users_related/verified_users_page.dart';
 import 'users_related/pending_users_page.dart';
 import 'accommodations/verified_accommodations_page.dart';
@@ -38,6 +39,9 @@ class _DashboardState extends State<Dashboard> {
       PendingAccommodationsPage(location: widget.location),
       VerifiedPlacesPage(location: widget.location),
       PendingPlacesPage(location: widget.location),
+      FlaggedReviewsPage(
+        location: widget.location,
+      ),
     ];
 
     return Scaffold(
@@ -84,6 +88,10 @@ class _DashboardState extends State<Dashboard> {
               NavigationRailDestination(
                 icon: Icon(Icons.new_releases),
                 label: Text('Pending Places'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.rate_review),
+                label: Text('Flagged Reviews'),
               ),
             ],
           ),

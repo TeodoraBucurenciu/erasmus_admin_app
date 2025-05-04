@@ -12,7 +12,7 @@ class PendingPlacesPage extends StatelessWidget {
     final docId = doc.id;
 
     await FirebaseFirestore.instance
-        .doc('$location/places_to_visit/verified_places/$docId')
+        .doc('$location/places_to_visit/verified_places_to_visit/$docId')
         .set(data);
 
     await doc.reference.delete();
@@ -23,7 +23,7 @@ class PendingPlacesPage extends StatelessWidget {
     final docId = doc.id;
 
     await FirebaseFirestore.instance
-        .doc('$location/places_to_visit/deleted_places/$docId')
+        .doc('$location/places_to_visit/deleted_places_to_visit/$docId')
         .set(data);
 
     await doc.reference.delete();
