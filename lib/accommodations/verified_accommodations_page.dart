@@ -49,7 +49,6 @@ class VerifiedAccommodationsPage extends StatelessWidget {
               final data = doc.data() as Map<String, dynamic>;
 
               final title = data['title'] ?? 'No title';
-              final address = data['address'] ?? 'No address';
               final category = data['locationCategory'] ?? '';
               final price = data['price']?.toStringAsFixed(0) ?? '-';
               final rooms = data['rooms']?.toString() ?? '?';
@@ -58,7 +57,6 @@ class VerifiedAccommodationsPage extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 child: ListTile(
                   title: Text(title),
-                  subtitle: Text('$address • $category'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

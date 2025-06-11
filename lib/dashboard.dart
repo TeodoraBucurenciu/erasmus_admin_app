@@ -91,7 +91,7 @@ class _DashboardState extends State<Dashboard> {
               ),
               NavigationRailDestination(
                 icon: Icon(Icons.rate_review),
-                label: Text('Flagged Reviews'),
+                label: Text('Reviews'),
               ),
             ],
           ),

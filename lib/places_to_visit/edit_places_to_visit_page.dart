@@ -12,36 +12,45 @@ class EditPlacePage extends StatefulWidget {
 
 class _EditPlacePageState extends State<EditPlacePage> {
   late TextEditingController _nameController;
-  late TextEditingController _categoryController;
   late TextEditingController _descriptionController;
-  late TextEditingController _locationController;
-  late TextEditingController _latitudeController;
-  late TextEditingController _longitudeController;
+  late TextEditingController _mapLinkController;
+
+  late String _selectedCategory;
+  final List<String> _categories = [
+    "Beaches",
+    "Hiking Trails",
+    "Historical Sites",
+    "Museums",
+    "Viewpoints",
+    "Cultural Spots",
+    "Local Markets",
+    "Restaurants",
+    "Cafes",
+    "Nightlife",
+    "Nature Parks",
+    "Religious Sites",
+    "Outdoor Activities",
+    "Outside Crete",
+  ];
 
   @override
   void initState() {
     super.initState();
     final data = widget.doc.data() as Map<String, dynamic>;
     _nameController = TextEditingController(text: data['name']);
-    _categoryController = TextEditingController(text: data['category']);
+    _selectedCategory = _categories.contains(data['category']) ? data['category'] : _categories.first;
     _descriptionController = TextEditingController(text: data['description']);
-    _locationController = TextEditingController(text: data['location']);
-    _latitudeController = TextEditingController(text: '${data['latitude']}');
-    _longitudeController = TextEditingController(text: '${data['longitude']}');
+    _mapLinkController = TextEditingController(text: data['mapLink'] ?? '');
   }
 
   Future<void> _saveChanges() async {
     try {
       await widget.doc.reference.update({
         'name': _nameController.text.trim(),
-        'category': _categoryController.text.trim(),
+        'category': _selectedCategory,
         'description': _descriptionController.text.trim(),
-        'location': _locationController.text.trim(),
-        'latitude': double.tryParse(_latitudeController.text.trim()) ?? 0.0,
-        'longitude': double.tryParse(_longitudeController.text.trim()) ?? 0.0,
+        'mapLink': _mapLinkController.text.trim(),
         'lastEditedAt': FieldValue.serverTimestamp(),
-        // optional: actualizezi și cine a editat dacă vrei
-        // 'lastEditedBy': FirebaseAuth.instance.currentUser?.uid,
       });
 
       Navigator.of(context).pop();
@@ -55,11 +64,8 @@ class _EditPlacePageState extends State<EditPlacePage> {
   @override
   void dispose() {
     _nameController.dispose();
-    _categoryController.dispose();
     _descriptionController.dispose();
-    _locationController.dispose();
-    _latitudeController.dispose();
-    _longitudeController.dispose();
+    _mapLinkController.dispose();
     super.dispose();
   }
 
@@ -76,31 +82,22 @@ class _EditPlacePageState extends State<EditPlacePage> {
               decoration: const InputDecoration(labelText: 'Name'),
             ),
             const SizedBox(height: 10),
-            TextField(
-              controller: _categoryController,
+            DropdownButtonFormField<String>(
+              value: _selectedCategory,
               decoration: const InputDecoration(labelText: 'Category'),
+              items: _categories.map((cat) => DropdownMenuItem(value: cat, child: Text(cat))).toList(),
+              onChanged: (val) => setState(() => _selectedCategory = val!),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: _descriptionController,
               decoration: const InputDecoration(labelText: 'Description'),
+              maxLines: 3,
             ),
             const SizedBox(height: 10),
             TextField(
-              controller: _locationController,
-              decoration: const InputDecoration(labelText: 'Location'),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _latitudeController,
-              decoration: const InputDecoration(labelText: 'Latitude'),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _longitudeController,
-              decoration: const InputDecoration(labelText: 'Longitude'),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              controller: _mapLinkController,
+              decoration: const InputDecoration(labelText: 'Google Maps Link'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(

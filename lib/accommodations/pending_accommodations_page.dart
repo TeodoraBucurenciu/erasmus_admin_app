@@ -11,9 +11,11 @@ class PendingAccommodationsPage extends StatelessWidget {
     final data = doc.data() as Map<String, dynamic>;
     final docId = doc.id;
 
+    final updatedData = Map<String, dynamic>.from(data)..['status'] = 'verified';
+
     await FirebaseFirestore.instance
         .doc('$location/accommodations/verified_accommodations/$docId')
-        .set(data);
+        .set(updatedData);
 
     await doc.reference.delete();
   }
@@ -54,7 +56,6 @@ class PendingAccommodationsPage extends StatelessWidget {
               final data = doc.data() as Map<String, dynamic>;
 
               final title = data['title'] ?? 'No title';
-              final address = data['address'] ?? 'No address';
               final category = data['locationCategory'] ?? '';
               final price = data['price']?.toStringAsFixed(0) ?? '-';
               final rooms = data['rooms']?.toString() ?? '?';
@@ -63,7 +64,6 @@ class PendingAccommodationsPage extends StatelessWidget {
                 margin: const EdgeInsets.all(8),
                 child: ListTile(
                   title: Text(title),
-                  subtitle: Text('$address • $category'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

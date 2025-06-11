@@ -12,21 +12,22 @@ class EditAccommodationPage extends StatefulWidget {
 
 class _EditAccommodationPageState extends State<EditAccommodationPage> {
   late TextEditingController _titleController;
-  late TextEditingController _addressController;
   late TextEditingController _priceController;
   late TextEditingController _roomsController;
   late TextEditingController _descriptionController;
   late TextEditingController _locationCategoryController;
+  late TextEditingController _mapLinkController;
+
 
   @override
   void initState() {
     super.initState();
     final data = widget.doc.data() as Map<String, dynamic>;
     _titleController = TextEditingController(text: data['title']);
-    _addressController = TextEditingController(text: data['address']);
     _priceController = TextEditingController(text: '${data['price']}');
     _roomsController = TextEditingController(text: '${data['rooms']}');
     _descriptionController = TextEditingController(text: data['description']);
+    _mapLinkController = TextEditingController(text: data['mapLink'] ?? '');
     _locationCategoryController = TextEditingController(text: data['locationCategory']);
   }
 
@@ -34,10 +35,10 @@ class _EditAccommodationPageState extends State<EditAccommodationPage> {
     try {
       await widget.doc.reference.update({
         'title': _titleController.text.trim(),
-        'address': _addressController.text.trim(),
         'price': double.tryParse(_priceController.text.trim()) ?? 0,
         'rooms': int.tryParse(_roomsController.text.trim()) ?? 1,
         'description': _descriptionController.text.trim(),
+        'mapLink': _mapLinkController.text.trim(),
         'locationCategory': _locationCategoryController.text.trim(),
         'lastEditedAt': FieldValue.serverTimestamp(),
       });
@@ -53,10 +54,10 @@ class _EditAccommodationPageState extends State<EditAccommodationPage> {
   @override
   void dispose() {
     _titleController.dispose();
-    _addressController.dispose();
     _priceController.dispose();
     _roomsController.dispose();
     _descriptionController.dispose();
+    _mapLinkController.dispose();
     _locationCategoryController.dispose();
     super.dispose();
   }
@@ -75,11 +76,6 @@ class _EditAccommodationPageState extends State<EditAccommodationPage> {
             ),
             const SizedBox(height: 10),
             TextField(
-              controller: _addressController,
-              decoration: const InputDecoration(labelText: 'Address'),
-            ),
-            const SizedBox(height: 10),
-            TextField(
               controller: _priceController,
               decoration: const InputDecoration(labelText: 'Price (€)'),
               keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -95,6 +91,11 @@ class _EditAccommodationPageState extends State<EditAccommodationPage> {
               controller: _descriptionController,
               decoration: const InputDecoration(labelText: 'Description'),
               maxLines: 3,
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: _mapLinkController,
+              decoration: const InputDecoration(labelText: 'Google Maps Link'),
             ),
             const SizedBox(height: 10),
             TextField(

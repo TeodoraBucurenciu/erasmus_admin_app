@@ -11,9 +11,11 @@ class PendingPlacesPage extends StatelessWidget {
     final data = doc.data() as Map<String, dynamic>;
     final docId = doc.id;
 
+    final updatedData = Map<String, dynamic>.from(data)..['status'] = 'verified';
+
     await FirebaseFirestore.instance
         .doc('$location/places_to_visit/verified_places_to_visit/$docId')
-        .set(data);
+        .set(updatedData);
 
     await doc.reference.delete();
   }
