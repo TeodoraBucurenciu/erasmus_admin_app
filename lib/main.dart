@@ -25,15 +25,15 @@ class ErasmusAdminApp extends StatelessWidget {
     final role = userDoc.get('role');
 
     if (role == 'admin_sibiu') {
-      return const Dashboard(location: 'Sibiu');
+      return const Dashboard(location: 'Sibiu', role: 'admin_sibiu');
     } else if (role == 'admin_heraklion') {
-      return const Dashboard(location: 'Heraklion');
+      return const Dashboard(location: 'Heraklion', role: 'admin_heraklion');
     } else if (role == 'admin_general') {
-      return const ChooseLocationPage();
-    } else {
-      await FirebaseAuth.instance.signOut();
-      return const AdminLoginPage();
+      return const ChooseLocationPage(role: 'admin_general');
     }
+
+    await FirebaseAuth.instance.signOut();
+    return const AdminLoginPage(); // fallback return
   }
 
   @override
@@ -69,8 +69,8 @@ class ErasmusAdminApp extends StatelessWidget {
       ),
       routes: {
         '/login': (context) => const AdminLoginPage(),
-        '/dashboard': (context) => const Dashboard(location: ''),
-        '/choose_location': (context) => const ChooseLocationPage(),
+        '/dashboard': (context) => const Dashboard(location: '', role: ''),
+        '/choose_location': (context) => const ChooseLocationPage(role: ''),
       },
     );
   }

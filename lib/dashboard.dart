@@ -8,11 +8,13 @@ import 'accommodations/verified_accommodations_page.dart';
 import 'accommodations/pending_accommodations_page.dart';
 import 'places_to_visit/verified_places_page.dart';
 import 'places_to_visit/pending_places_page.dart';
+import 'users_related/manage_users_page.dart';
 
 class Dashboard extends StatefulWidget {
   final String location;
+  final String role;
 
-  const Dashboard({super.key, required this.location});
+  const Dashboard({super.key, required this.location, required this.role});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -39,10 +41,12 @@ class _DashboardState extends State<Dashboard> {
       PendingAccommodationsPage(location: widget.location),
       VerifiedPlacesPage(location: widget.location),
       PendingPlacesPage(location: widget.location),
-      FlaggedReviewsPage(
-        location: widget.location,
-      ),
+      FlaggedReviewsPage(location: widget.location),
     ];
+
+    if (widget.role == 'admin_general') {
+      pages.add(const ManageUsersPage());
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -64,35 +68,40 @@ class _DashboardState extends State<Dashboard> {
               });
             },
             labelType: NavigationRailLabelType.all,
-            destinations: const [
-              NavigationRailDestination(
+            destinations: [
+              const NavigationRailDestination(
                 icon: Icon(Icons.verified_user),
                 label: Text('Verified Users'),
               ),
-              NavigationRailDestination(
+              const NavigationRailDestination(
                 icon: Icon(Icons.person_add),
                 label: Text('Pending Users'),
               ),
-              NavigationRailDestination(
+              const NavigationRailDestination(
                 icon: Icon(Icons.hotel_class),
                 label: Text('Verified Accommodations'),
               ),
-              NavigationRailDestination(
+              const NavigationRailDestination(
                 icon: Icon(Icons.hotel),
                 label: Text('Pending Accommodations'),
               ),
-              NavigationRailDestination(
+              const NavigationRailDestination(
                 icon: Icon(Icons.place),
                 label: Text('Verified Places'),
               ),
-              NavigationRailDestination(
+              const NavigationRailDestination(
                 icon: Icon(Icons.new_releases),
                 label: Text('Pending Places'),
               ),
-              NavigationRailDestination(
+              const NavigationRailDestination(
                 icon: Icon(Icons.rate_review),
                 label: Text('Reviews'),
               ),
+              if (widget.role == 'admin_general')
+                const NavigationRailDestination(
+                  icon: Icon(Icons.manage_accounts),
+                  label: Text('Manage Users'),
+                ),
             ],
           ),
           const VerticalDivider(thickness: 1, width: 1),

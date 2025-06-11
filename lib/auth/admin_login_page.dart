@@ -47,17 +47,17 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         if (role == 'admin_sibiu') {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => const Dashboard(location: 'Sibiu')),
+              MaterialPageRoute(builder: (_) => Dashboard(location: 'Sibiu', role: role))
           );
         } else if (role == 'admin_heraklion') {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => const Dashboard(location: 'Heraklion')),
+              MaterialPageRoute(builder: (_) => Dashboard(location: 'Sibiu', role: role))
           );
         } else if (role == 'admin_general') {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => const ChooseLocationPage()),
+            MaterialPageRoute(builder: (_) => ChooseLocationPage(role: role)),
           );
         } else {
           if (!mounted) return;

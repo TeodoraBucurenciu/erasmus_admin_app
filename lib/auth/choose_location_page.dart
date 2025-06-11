@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import '../dashboard.dart';
 
 class ChooseLocationPage extends StatelessWidget {
-  const ChooseLocationPage({super.key});
+  final String role;
+
+  const ChooseLocationPage({super.key, required this.role});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class ChooseLocationPage extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Dashboard(location: 'Heraklion'),
+                    builder: (context) => Dashboard(location: 'Heraklion', role: role),
                   ),
                 );
               },
@@ -31,7 +33,7 @@ class ChooseLocationPage extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Dashboard(location: 'Sibiu'),
+                    builder: (context) => Dashboard(location: 'Sibiu', role: role),
                   ),
                 );
               },
